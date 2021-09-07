@@ -26,13 +26,30 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
+        <Button
+            android:id="@+id/button_crash"
+            style="@style/Widget.AppCompat.Button.Small"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/crash_button"
+            android:textColor="@color/white"
+            android:textColorHighlight="#FFFFFF"
+            android:textStyle="bold" />
+
     </com.google.android.material.appbar.AppBarLayout>
+
+
 
     <androidx.viewpager.widget.ViewPager
         android:id="@+id/view_pager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+        app:layout_behavior="@string/appbar_scrolling_view_behavior" >
+
+
+
+
+    </androidx.viewpager.widget.ViewPager>
 
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

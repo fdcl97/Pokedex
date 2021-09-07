@@ -3,4 +3,5 @@
     <string name="tab_text_1">Pokemon</string>
     <string name="tab_text_2">Favoritos</string>
     <string name="tab_text_3">Bayas</string>
+    <string name="crash_button">CRASH APP</string>
 </resources>
