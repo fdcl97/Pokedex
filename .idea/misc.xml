@@ -3,9 +3,8 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/Users/fcaballero/AndroidStudioProjects/Pokedex/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.2703125" />
-        <entry key="..\:/Users/fcaballero/AndroidStudioProjects/Pokedex/app/src/main/res/drawable/ic_launcher_background.xml" value="0.22175925925925927" />
-        <entry key="..\:/Users/fcaballero/AndroidStudioProjects/Pokedex/app/src/main/res/drawable/splash_screen.xml" value="0.2703125" />
+        <entry key="..\:/Users/fcaballero/AndroidStudioProjects/Pokedex-b9fb1668e2f3bc99ecc07043ec96da3edfce46a6/app/src/main/res/layout/activity_main.xml" value="0.1793478260869565" />
+        <entry key="..\:/Users/fcaballero/AndroidStudioProjects/Pokedex-b9fb1668e2f3bc99ecc07043ec96da3edfce46a6/app/src/main/res/layout/fragment_main.xml" value="0.1793478260869565" />
         <entry key="..\:/Users/fcaballero/AndroidStudioProjects/Pokedex/app/src/main/res/layout/activity_main.xml" value="0.264" />
         <entry key="..\:/Users/fcaballero/AndroidStudioProjects/Pokedex/app/src/main/res/layout/fragment_main.xml" value="0.1793478260869565" />
         <entry key="..\:/Users/fcaballero/AndroidStudioProjects/Pokedex/app/src/main/res/xml/appcenter_backup_rule.xml" value="0.25416666666666665" />
