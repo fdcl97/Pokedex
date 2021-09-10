@@ -13,8 +13,8 @@
         android:layout_height="match_parent"
         android:scaleType="centerCrop"
         app:srcCompat="@drawable/bg_pokedex"
-        tools:layout_editor_absoluteX="24dp"
-        tools:layout_editor_absoluteY="16dp" />
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="0dp" />
 
     <ImageButton
         android:id="@+id/crash_button"
@@ -28,6 +28,7 @@
         app:srcCompat="@drawable/bg_btn_crash" />
 
     <com.google.android.material.tabs.TabLayout
+        android:id="@+id/tabLayout"
         android:layout_width="348dp"
         android:layout_height="38dp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -52,5 +53,15 @@
             android:layout_height="wrap_content"
             android:text="Bayas" />
     </com.google.android.material.tabs.TabLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler_view"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintStart_toStartOf="@id/tabLayout"
+        app:layout_constraintEnd_toEndOf="@id/tabLayout"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tabLayout"
+        app:layout_constraintVertical_bias="0.0" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
