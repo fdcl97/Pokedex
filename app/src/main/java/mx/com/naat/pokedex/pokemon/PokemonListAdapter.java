@@ -3,11 +3,22 @@ package mx.com.naat.pokedex.pokemon;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.annotation.GlideModule;
+
+import com.bumptech.glide.annotation.GlideExtension;
+import com.bumptech.glide.annotation.GlideModule;
+import com.bumptech.glide.annotation.GlideOption;
+import com.bumptech.glide.annotation.GlideType;
+import com.bumptech.glide.annotation.compiler.GlideAnnotationProcessor;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 
 import java.util.ArrayList;
 
@@ -16,9 +27,12 @@ import mx.com.naat.pokedex.model.Pokemon;
 
 public class PokemonListAdapter extends RecyclerView.Adapter<PokemonListAdapter.ViewHolder> {
 
-    private ArrayList<Pokemon> dataset;
 
-    public PokemonListAdapter() {
+    private ArrayList<Pokemon> dataset;
+    private Context context;
+
+    public PokemonListAdapter(Context context) {
+        this.context = context;
         dataset = new ArrayList<>();
     }
 
@@ -32,6 +46,13 @@ public class PokemonListAdapter extends RecyclerView.Adapter<PokemonListAdapter.
     public void onBindViewHolder( ViewHolder holder, int position) {
         Pokemon pokemon = dataset.get(position);
         holder.pokemonName.setText(pokemon.getName());
+
+        //Get image with glide
+        Glide.with(context)
+                .load("https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/shiny/" + pokemon.getNumber() + ".png")
+                .centerCrop()
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                .into(holder.pokemonImage);
     }
 
     @Override
