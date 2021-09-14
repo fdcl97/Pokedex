@@ -46,6 +46,8 @@ public class PokemonListAdapter extends RecyclerView.Adapter<PokemonListAdapter.
     public void onBindViewHolder( ViewHolder holder, int position) {
         Pokemon pokemon = dataset.get(position);
         holder.pokemonName.setText(pokemon.getName());
+        holder.pokemonNumber.setText(pokemon.getNumber());
+
 
         //Get image with glide
         Glide.with(context)
@@ -68,12 +70,13 @@ public class PokemonListAdapter extends RecyclerView.Adapter<PokemonListAdapter.
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         private ImageView pokemonImage;
-        private TextView pokemonName;
+        private TextView pokemonName, pokemonNumber;
 
         public ViewHolder(View itemView) {
             super(itemView);
             pokemonImage = (ImageView) itemView.findViewById(R.id.pokemon_image);
             pokemonName = (TextView) itemView.findViewById(R.id.pokemon_name);
+            pokemonNumber = (TextView) itemView.findViewById(R.id.pokemon_number);
         }
 
     }
