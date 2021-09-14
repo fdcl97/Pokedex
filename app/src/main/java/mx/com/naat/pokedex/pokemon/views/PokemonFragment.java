@@ -7,79 +7,111 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.google.android.material.tabs.TabLayout;
 
+import java.util.ArrayList;
+
 import mx.com.naat.pokedex.R;
+import mx.com.naat.pokedex.model.Api;
+import mx.com.naat.pokedex.model.Pokemon;
+import mx.com.naat.pokedex.model.PokemonResponse;
+import mx.com.naat.pokedex.pokemon.PokemonListAdapter;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link PokemonFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class PokemonFragment extends Fragment {
+    private static final String TAG = "POKEDEX";
+    private RecyclerView recyclerView;
+    ArrayList<Pokemon> pokemonList;
+    private PokemonListAdapter pokemonListAdapter;
+    private Retrofit retrofit;
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
-    public PokemonFragment() {
-        // Required empty public constructor
-    }
-
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment PokemonFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static PokemonFragment newInstance(String param1, String param2) {
-        PokemonFragment fragment = new PokemonFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
-    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_pokemon, container, false);
+        View view = inflater.inflate(R.layout.fragment_pokemon, container, false);
+
+        //generate the recycler view and show the pokemons
+        RecyclerView recyclerView = view.findViewById(R.id.recycler_view1);
+        PokemonListAdapter pokemonListAdapter = new PokemonListAdapter(getContext());
+        recyclerView.setAdapter(pokemonListAdapter);
+        recyclerView.setHasFixedSize(true);
+        GridLayoutManager layoutManager = new GridLayoutManager(getContext(), 1);
+        recyclerView.setLayoutManager(layoutManager);
+
+
+        pokemonList = new ArrayList<>();
+
+        //Retrofit
+        retrofit = new Retrofit.Builder()
+                .baseUrl("https://pokeapi.co/api/v2/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        getPokemon();
+
+        return view;
+    }
+
+    private void getPokemon() {
+        pokemonListAdapter = new PokemonListAdapter(getContext());
+        Api service = retrofit.create(Api.class);
+        Call<PokemonResponse> pokemonResponseCall =   service.getPokemonList();
+
+        pokemonResponseCall.enqueue(new Callback<PokemonResponse>() {
+            public void onResponse(Call<PokemonResponse> call, Response<PokemonResponse> response) {
+                if (response.isSuccessful()){
+
+                    PokemonResponse pokemonResponse = response.body();
+                    ArrayList<Pokemon> pokemonList = pokemonResponse.getPokemons();
+                    pokemonListAdapter.addPokemonList(pokemonList);
+
+                }else{
+                    Log.i(TAG,"onResponse: "+response.errorBody());
+
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<PokemonResponse> call, Throwable t) {
+                Log.e(TAG, " onFailure: " + t.getMessage());
+            }
+        });
+
     }
 
 
-    @Override
+    /*@Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        //generate the recycler view and show the pokemons
+        /*RecyclerView recyclerView = view.findViewById(R.id.recycler_view1);
+        PokemonListAdapter pokemonListAdapter = new PokemonListAdapter(getContext());
+        recyclerView.setAdapter(pokemonListAdapter);
+        recyclerView.setHasFixedSize(true);
+        GridLayoutManager layoutManager = new GridLayoutManager(getContext(), 1);
+        recyclerView.setLayoutManager(layoutManager);
 
         //Nav controller
         final NavController navController = Navigation.findNavController(view);
         TabLayout tabLayout = view.findViewById(R.id.tab_layout);
 
-        /*tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
 
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
@@ -105,5 +137,5 @@ public class PokemonFragment extends Fragment {
 
             }
         });*/
-    }
+
 }

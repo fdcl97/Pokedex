@@ -25,8 +25,9 @@ import java.util.ArrayList;
 import mx.com.naat.pokedex.R;
 import mx.com.naat.pokedex.model.Pokemon;
 
-public class PokemonListAdapter extends RecyclerView.Adapter<PokemonListAdapter.ViewHolder> {
+public class PokemonListAdapter extends RecyclerView.Adapter<PokemonListAdapter.ViewHolder> implements View.OnClickListener{
 
+    private View.OnClickListener listener;
 
     private ArrayList<Pokemon> dataset;
     private Context context;
@@ -39,6 +40,7 @@ public class PokemonListAdapter extends RecyclerView.Adapter<PokemonListAdapter.
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_pokemon, parent, false);
+        view.setOnClickListener(this);//click method
         return new ViewHolder(view);
     }
 
@@ -65,6 +67,19 @@ public class PokemonListAdapter extends RecyclerView.Adapter<PokemonListAdapter.
     public void addPokemonList(ArrayList<Pokemon> pokemonList) {
         dataset.addAll(pokemonList);
         notifyDataSetChanged();
+    }
+
+    //Click methods
+
+    public void setOnClickListener(View.OnClickListener listener) {
+        this.listener = listener;
+    }
+
+    @Override
+    public void onClick(View v) {
+        if (listener != null) {
+            listener.onClick(v);
+        }
     }
 
 
