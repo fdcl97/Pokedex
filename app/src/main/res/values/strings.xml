@@ -1,4 +1,9 @@
 <resources>
     <string name="app_name">Pokedex</string>
     <string name="main_crash">Button crash has been pressed</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="pokemon_fragment">Pokemon Fragment</string>
+    <string name="favorites_fragment">Favoritos Fragment</string>
+    <string name="bayas_fragment">Bayas Fragment</string>
 </resources>

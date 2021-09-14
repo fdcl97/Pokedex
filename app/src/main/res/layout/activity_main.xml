@@ -21,6 +21,7 @@
         android:layout_width="74dp"
         android:layout_height="66dp"
         android:layout_marginTop="80dp"
+        android:background="@android:color/transparent"
         android:scaleType="centerCrop"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -28,7 +29,7 @@
         app:srcCompat="@drawable/bg_btn_crash" />
 
     <com.google.android.material.tabs.TabLayout
-        android:id="@+id/tabLayout"
+        android:id="@+id/tab_layout"
         android:layout_width="348dp"
         android:layout_height="38dp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -58,10 +59,23 @@
         android:id="@+id/recycler_view"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        app:layout_constraintStart_toStartOf="@id/tabLayout"
-        app:layout_constraintEnd_toEndOf="@id/tabLayout"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tabLayout"
+        app:layout_constraintEnd_toEndOf="@id/tab_layout"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@id/tab_layout"
+        app:layout_constraintTop_toBottomOf="@+id/tab_layout"
         app:layout_constraintVertical_bias="0.0" />
+
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/fragmentContainerView"
+        android:name="androidx.navigation.fragment.NavHostFragment"
+        android:layout_width="314dp"
+        android:layout_height="8dp"
+        app:defaultNavHost="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/recycler_view"
+        app:layout_constraintStart_toStartOf="@+id/recycler_view"
+        app:layout_constraintTop_toBottomOf="@+id/tab_layout"
+        app:navGraph="@navigation/nav_graph" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
