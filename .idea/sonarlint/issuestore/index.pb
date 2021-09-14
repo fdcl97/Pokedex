@@ -22,5 +22,3 @@ X
 Papp/src/androidTest/java/mx/com/naat/pokedex/pokemon/PokemonListAdapterTest.java,9\7\97f41deca98ec741020b76b141f36be1caad640c
 <
 build.gradle,f\0\f07866736216be0ee2aba49e392191aeae700a35
-@
-app/build.gradle,f\4\f4a01d6a4fcb971362ec00a83903fd3902f52164

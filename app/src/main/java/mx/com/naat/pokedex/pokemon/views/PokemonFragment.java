@@ -14,6 +14,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.google.android.material.tabs.TabLayout;
 
@@ -45,8 +46,8 @@ public class PokemonFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_pokemon, container, false);
 
         //generate the recycler view and show the pokemons
-        RecyclerView recyclerView = view.findViewById(R.id.recycler_view1);
-        PokemonListAdapter pokemonListAdapter = new PokemonListAdapter(getContext());
+        recyclerView = view.findViewById(R.id.recycler_view1);
+        pokemonListAdapter = new PokemonListAdapter(getContext());
         recyclerView.setAdapter(pokemonListAdapter);
         recyclerView.setHasFixedSize(true);
         GridLayoutManager layoutManager = new GridLayoutManager(getContext(), 1);
@@ -63,6 +64,8 @@ public class PokemonFragment extends Fragment {
 
         getPokemon();
 
+
+
         return view;
     }
 
@@ -72,6 +75,8 @@ public class PokemonFragment extends Fragment {
         Call<PokemonResponse> pokemonResponseCall =   service.getPokemonList();
 
         pokemonResponseCall.enqueue(new Callback<PokemonResponse>() {
+
+            @Override
             public void onResponse(Call<PokemonResponse> call, Response<PokemonResponse> response) {
                 if (response.isSuccessful()){
 
@@ -95,21 +100,19 @@ public class PokemonFragment extends Fragment {
     }
 
 
-    /*@Override
+
+
+    @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
-        //generate the recycler view and show the pokemons
-        /*RecyclerView recyclerView = view.findViewById(R.id.recycler_view1);
-        PokemonListAdapter pokemonListAdapter = new PokemonListAdapter(getContext());
-        recyclerView.setAdapter(pokemonListAdapter);
-        recyclerView.setHasFixedSize(true);
-        GridLayoutManager layoutManager = new GridLayoutManager(getContext(), 1);
-        recyclerView.setLayoutManager(layoutManager);
 
         //Nav controller
         final NavController navController = Navigation.findNavController(view);
         TabLayout tabLayout = view.findViewById(R.id.tab_layout);
+
+        //Set the default tab
+        TabLayout.Tab tab = tabLayout.getTabAt(0);
+        tabLayout.selectTab(tab);
 
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
 
@@ -118,10 +121,12 @@ public class PokemonFragment extends Fragment {
                 switch (tab.getPosition()) {
                     case 1:
                         navController.navigate(R.id.favoritosFragment);
+                        Toast.makeText(getActivity(), "Favoritos", Toast.LENGTH_SHORT).show();
                         break;
 
                     case 2:
                         navController.navigate(R.id.bayasFragment);
+                        Toast.makeText(getActivity(), "Bayas", Toast.LENGTH_SHORT).show();
                         break;
                 }
 
@@ -136,6 +141,7 @@ public class PokemonFragment extends Fragment {
             public void onTabReselected(TabLayout.Tab tab) {
 
             }
-        });*/
+        });
 
+    }
 }
