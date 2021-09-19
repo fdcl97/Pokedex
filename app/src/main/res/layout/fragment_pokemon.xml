@@ -34,10 +34,8 @@
 
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:text="@string/pokemon_fragment" />
-
-
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_view1"

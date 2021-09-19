@@ -20,6 +20,7 @@ import com.google.android.material.tabs.TabLayout;
 
 import java.util.ArrayList;
 
+import mx.com.naat.pokedex.BuildConfig;
 import mx.com.naat.pokedex.R;
 import mx.com.naat.pokedex.model.Api;
 import mx.com.naat.pokedex.model.Pokemon;
@@ -65,12 +66,13 @@ public class PokemonFragment extends Fragment {
         getPokemon();
 
 
-
+        //BuildConfig.DEBUG
+        //BuildConfig.FLAVOR.equals("prod");
         return view;
     }
 
+
     private void getPokemon() {
-        pokemonListAdapter = new PokemonListAdapter(getContext());
         Api service = retrofit.create(Api.class);
         Call<PokemonResponse> pokemonResponseCall =   service.getPokemonList();
 
@@ -83,6 +85,7 @@ public class PokemonFragment extends Fragment {
                     PokemonResponse pokemonResponse = response.body();
                     ArrayList<Pokemon> pokemonList = pokemonResponse.getPokemons();
                     pokemonListAdapter.addPokemonList(pokemonList);
+                    pokemonListAdapter.notifyDataSetChanged();
 
                 }else{
                     Log.i(TAG,"onResponse: "+response.errorBody());
@@ -98,9 +101,6 @@ public class PokemonFragment extends Fragment {
         });
 
     }
-
-
-
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {

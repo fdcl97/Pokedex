@@ -14,13 +14,13 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.annotation.GlideModule;
 
 import com.bumptech.glide.annotation.GlideExtension;
-import com.bumptech.glide.annotation.GlideModule;
 import com.bumptech.glide.annotation.GlideOption;
 import com.bumptech.glide.annotation.GlideType;
 import com.bumptech.glide.annotation.compiler.GlideAnnotationProcessor;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import mx.com.naat.pokedex.R;
 import mx.com.naat.pokedex.model.Pokemon;
@@ -64,7 +64,7 @@ public class PokemonListAdapter extends RecyclerView.Adapter<PokemonListAdapter.
         return dataset.size();
     }
 
-    public void addPokemonList(ArrayList<Pokemon> pokemonList) {
+    public void addPokemonList(List<Pokemon> pokemonList) {
         dataset.addAll(pokemonList);
         notifyDataSetChanged();
     }
@@ -85,7 +85,8 @@ public class PokemonListAdapter extends RecyclerView.Adapter<PokemonListAdapter.
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         private ImageView pokemonImage;
-        private TextView pokemonName, pokemonNumber;
+        private TextView pokemonName;
+        private TextView pokemonNumber;
 
         public ViewHolder(View itemView) {
             super(itemView);
