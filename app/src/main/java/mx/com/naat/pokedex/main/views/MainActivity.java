@@ -2,12 +2,15 @@ package mx.com.naat.pokedex.main.views;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.room.Room;
 
 import com.chuckerteam.chucker.api.ChuckerInterceptor;
 import com.microsoft.appcenter.AppCenter;
 import com.microsoft.appcenter.analytics.Analytics;
 import com.microsoft.appcenter.crashes.Crashes;
 
+import android.content.Context;
+import android.nfc.Tag;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -17,11 +20,15 @@ import android.widget.ImageButton;
 import android.widget.Toast;
 
 import java.io.IOException;
+import java.util.List;
 
 import mx.com.naat.pokedex.R;
+import mx.com.naat.pokedex.favoritos.FavoritesPokemons;
 import mx.com.naat.pokedex.favoritos.PokemonApp;
 import mx.com.naat.pokedex.main.presenters.MainPresenter;
 import mx.com.naat.pokedex.main.presenters.MainPresenterImplement;
+import mx.com.naat.pokedex.model.Pokemon;
+import mx.com.naat.pokedex.model.PokemonDao;
 import okhttp3.CertificatePinner;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -31,12 +38,32 @@ public class MainActivity extends AppCompatActivity implements MainView{
 
     private ImageButton crashButton;
     private MainPresenter presenter;
-    private PokemonApp app;
+
+    FavoritesPokemons db;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         hideTopBar();
+
+
+        //Room
+        db = Room.databaseBuilder(getApplicationContext(), FavoritesPokemons.class, "pokemon")
+                .allowMainThreadQueries()
+                .build();
+
+        Pokemon pokemon = new Pokemon();
+        pokemon.setName("ddddd");
+        pokemon.setUrl("sdsdsdsd");
+        pokemon.setNumber("20");
+        pokemon.setFavorites(true);
+
+        //db.pokemonDao().insert(pokemon);
+        String pok = db.pokemonDao().getAll().toString();
+
+        Toast.makeText(getApplicationContext(), pok, Toast.LENGTH_SHORT).show();
+        Log.e("POKEMON SAVED!!!!", pok);
 
 
 

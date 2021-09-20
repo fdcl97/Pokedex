@@ -3,6 +3,8 @@ package mx.com.naat.pokedex.favoritos;
 
 
 import android.content.Context;
+import android.util.Log;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.room.Database;
@@ -10,6 +12,7 @@ import androidx.room.Room;
 import androidx.room.RoomDatabase;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 
+import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -20,7 +23,7 @@ import mx.com.naat.pokedex.model.PokemonDao;
         entities = {Pokemon.class},
         version = 1
 )
-abstract class FavoritesPokemons extends RoomDatabase {
+public abstract class FavoritesPokemons extends RoomDatabase {
 
     public abstract PokemonDao pokemonDao();
 
@@ -30,12 +33,12 @@ abstract class FavoritesPokemons extends RoomDatabase {
             Executors.newFixedThreadPool(NUMBER_OF_THREADS);
 
 
-    static FavoritesPokemons getDatabase(final Context context) {
+    public static FavoritesPokemons getDatabase(final Context context) {
         if (INSTACE == null) {
             synchronized (FavoritesPokemons.class) {
                 if (INSTACE == null) {
                     INSTACE = Room.databaseBuilder(context.getApplicationContext(),
-                            FavoritesPokemons.class, "word_database")
+                            FavoritesPokemons.class, "pokemon_database.db")
                             .addCallback(sRoomDatabaseCallBack)
                             .build();
                 }
@@ -53,7 +56,13 @@ abstract class FavoritesPokemons extends RoomDatabase {
             //restart the db
             databaseWriteExecutor.execute(() -> {
                 PokemonDao dao = INSTACE.pokemonDao();
+                Pokemon pokemon = new Pokemon();
+                dao.insert(pokemon);
                 dao.getAll();
+                List<Pokemon> pokemons = dao.getAll();
+                Log.i("POKEMON LIST", pokemons.toString());
+
+
 
             });
         }

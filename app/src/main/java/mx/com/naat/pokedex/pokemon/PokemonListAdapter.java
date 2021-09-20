@@ -25,7 +25,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import mx.com.naat.pokedex.R;
+import mx.com.naat.pokedex.favoritos.FavoritesPokemons;
 import mx.com.naat.pokedex.model.Pokemon;
+import mx.com.naat.pokedex.model.PokemonDao;
 
 public class PokemonListAdapter extends RecyclerView.Adapter<PokemonListAdapter.ViewHolder> implements View.OnClickListener{
 
@@ -94,6 +96,9 @@ public class PokemonListAdapter extends RecyclerView.Adapter<PokemonListAdapter.
     @SuppressLint("NotifyDataSetChanged")
     public void addPokemonList(List<Pokemon> pokemonList) {
         dataset.addAll(pokemonList);
+        FavoritesPokemons db = FavoritesPokemons.getDatabase(this.context);
+        PokemonDao dao = db.pokemonDao();
+        //dao.insert(pokemonList.get(0));
         notifyDataSetChanged();
     }
 
