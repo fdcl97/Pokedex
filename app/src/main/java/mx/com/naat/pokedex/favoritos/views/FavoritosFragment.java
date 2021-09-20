@@ -15,13 +15,10 @@ import android.view.ViewGroup;
 import com.google.android.material.tabs.TabLayout;
 
 import mx.com.naat.pokedex.R;
+import mx.com.naat.pokedex.favoritos.PokemonApp;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link FavoritosFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class FavoritosFragment extends Fragment {
+
 
 
     @Override
@@ -34,6 +31,7 @@ public class FavoritosFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
 
         //Nav controller
         final NavController navController = Navigation.findNavController(view);

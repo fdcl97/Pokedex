@@ -2,6 +2,8 @@ package mx.com.naat.pokedex.model;
 
 import java.util.ArrayList;
 
+
+
 public class PokemonResponse {
     private ArrayList<Pokemon> results;
 

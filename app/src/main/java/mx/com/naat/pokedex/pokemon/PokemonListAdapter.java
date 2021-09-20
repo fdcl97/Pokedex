@@ -3,11 +3,13 @@ package mx.com.naat.pokedex.pokemon;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.Switch;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -29,12 +31,30 @@ public class PokemonListAdapter extends RecyclerView.Adapter<PokemonListAdapter.
 
     private View.OnClickListener listener;
 
-    private ArrayList<Pokemon> dataset;
-    private Context context;
+    private final ArrayList<Pokemon> dataset;
+    private final Context context;
 
     public PokemonListAdapter(Context context) {
         this.context = context;
         dataset = new ArrayList<>();
+    }
+
+    public static class ViewHolder extends RecyclerView.ViewHolder {
+        private final ImageView pokemonImage;
+        private final TextView pokemonName;
+        private final TextView pokemonNumber;
+        @SuppressLint("UseSwitchCompatOrMaterialCode")
+        private final Switch favorites;
+
+
+        public ViewHolder(View itemView) {
+            super(itemView);
+            pokemonImage = (ImageView) itemView.findViewById(R.id.pokemon_image);
+            pokemonName = (TextView) itemView.findViewById(R.id.pokemon_name);
+            pokemonNumber = (TextView) itemView.findViewById(R.id.pokemon_number);
+            favorites = (Switch) itemView.findViewById(R.id.favorites);
+            favorites.setChecked(true);
+        }
     }
 
     @Override
@@ -46,9 +66,15 @@ public class PokemonListAdapter extends RecyclerView.Adapter<PokemonListAdapter.
 
     @Override
     public void onBindViewHolder( ViewHolder holder, int position) {
+        boolean cheked = false;
         Pokemon pokemon = dataset.get(position);
         holder.pokemonName.setText(pokemon.getName());
         holder.pokemonNumber.setText(pokemon.getNumber());
+        if (holder.favorites.isChecked()) {
+            cheked = true;
+        }
+        holder.favorites.setChecked(pokemon.isFavorites(cheked));
+
 
 
         //Get image with glide
@@ -57,6 +83,7 @@ public class PokemonListAdapter extends RecyclerView.Adapter<PokemonListAdapter.
                 .centerCrop()
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .into(holder.pokemonImage);
+        //notifyDataSetChanged();
     }
 
     @Override
@@ -64,6 +91,7 @@ public class PokemonListAdapter extends RecyclerView.Adapter<PokemonListAdapter.
         return dataset.size();
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     public void addPokemonList(List<Pokemon> pokemonList) {
         dataset.addAll(pokemonList);
         notifyDataSetChanged();
@@ -82,20 +110,6 @@ public class PokemonListAdapter extends RecyclerView.Adapter<PokemonListAdapter.
         }
     }
 
-
-    public class ViewHolder extends RecyclerView.ViewHolder {
-        private ImageView pokemonImage;
-        private TextView pokemonName;
-        private TextView pokemonNumber;
-
-        public ViewHolder(View itemView) {
-            super(itemView);
-            pokemonImage = (ImageView) itemView.findViewById(R.id.pokemon_image);
-            pokemonName = (TextView) itemView.findViewById(R.id.pokemon_name);
-            pokemonNumber = (TextView) itemView.findViewById(R.id.pokemon_number);
-        }
-
-    }
 
 
 }
