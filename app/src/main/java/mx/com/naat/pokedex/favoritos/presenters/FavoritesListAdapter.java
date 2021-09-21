@@ -98,7 +98,7 @@ public class FavoritesListAdapter extends RecyclerView.Adapter<FavoritesListAdap
 
     @SuppressLint("NotifyDataSetChanged")
     public void addPokemonList(List<Pokemon> pokemonList) {
-        dataset = db.pokemonDao().getAll();
+        dataset.addAll(pokemonList);
         notifyDataSetChanged();
     }
 

@@ -87,6 +87,15 @@ public class PokemonListAdapter extends RecyclerView.Adapter<PokemonListAdapter.
         holder.favorites.setChecked(pokemon.isFavorites());
 
 
+        //If a pokemons has been selected, it will persisnt although the fragment changes
+        String [] pokemonNames = db.pokemonDao().getAllNames();
+        for (String name: pokemonNames) {
+            if  (name.equals(pokemon.getName())) {
+                holder.favorites.setChecked(true);
+            }
+        }
+
+
         List<Pokemon> pokemons = db.pokemonDao().getAll();
 
         holder.favorites.setOnCheckedChangeListener((buttonView, isChecked) -> {

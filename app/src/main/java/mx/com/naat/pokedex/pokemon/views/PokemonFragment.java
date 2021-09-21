@@ -105,6 +105,7 @@ public class PokemonFragment extends Fragment {
 
     }
 
+    //Nagigation
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);

@@ -23,6 +23,9 @@ interface PokemonDao {
     @Query("SELECT name FROM pokemon_table WHERE number = :id")
     String getbyId(int id);
 
+    @Query("SELECT name FROM pokemon_table")
+    String[] getAllNames();
+
     @Query("DELETE FROM pokemon_table WHERE number = :id")
     public void deleteById(int id);
 
