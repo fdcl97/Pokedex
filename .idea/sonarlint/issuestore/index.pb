@@ -30,16 +30,12 @@ n
 Rapp/src/main/java/mx/com/naat/pokedex/main/interactor/MainInteractorImplement.java,1\c\1cf71fda7f16943505c741b23e975aaef08314a6
 y
 Iapp/src/main/java/mx/com/naat/pokedex/main/interactor/MainInteractor.java,c\8\c8ebc31d66d7af20d2b8804d8ba2209c8e640bbf
-Å
-Qapp/src/main/java/mx/com/naat/pokedex/main/presenters/MainPresenterImplement.java,a\7\a76ccc49b36e8f3ce2163ad78153466a4cefc903
 @
 app/build.gradle,f\4\f4a01d6a4fcb971362ec00a83903fd3902f52164
 P
  app/src/main/AndroidManifest.xml,8\c\8c55c3ccc257e5907959013f99656e4c8ec3903e
 d
 4app/src/main/java/mx/com/naat/pokedex/model/Api.java,3\c\3c66584f31fed54eb0f9e0b8a3c2fdd4b43fac55
-|
-Lapp/src/main/java/mx/com/naat/pokedex/favoritos/views/FavoritosFragment.java,e\a\ea086c75e37646a57458f4ed166785b89b29cfc4
 v
 Fapp/src/main/java/mx/com/naat/pokedex/favoritos/FavoritesPokemons.java,8\1\8154f0b4c2809b18db8227bfb79be0cf3bc2049c
 p

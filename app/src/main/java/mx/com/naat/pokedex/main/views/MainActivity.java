@@ -47,28 +47,13 @@ public class MainActivity extends AppCompatActivity implements MainView{
 
         hideTopBar();
 
-
         //Room
         db = Room.databaseBuilder(getApplicationContext(), FavoritesPokemons.class, "pokemon")
                 .allowMainThreadQueries()
                 .build();
 
 
-
-        //db.pokemonDao().insert(pokemon);
-        List<Pokemon> pokemons = db.pokemonDao().getAll();
-
-        //Print pokemons saved
-        for (int i = 0; i < pokemons.size(); i++) {
-            Log.e("POKEMON SAVED!!!!", pokemons.get(i).getName());
-        }
-
-        Toast.makeText(getApplicationContext(), pokemons.toString(), Toast.LENGTH_LONG).show();
-
-        String pok = db.pokemonDao().getAll().toString();
-
-
-
+        //db.pokemonDao().deleteAll();
 
 
         super.onCreate(savedInstanceState);

@@ -1,29 +1,19 @@
-package mx.com.naat.pokedex.pokemon;
+package mx.com.naat.pokedex.favoritos.presenters;
+
+import android.annotation.SuppressLint;
+import android.content.Context;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.CheckBox;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.room.Room;
 
-import android.annotation.SuppressLint;
-import android.content.Context;
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.CheckBox;
-import android.widget.CompoundButton;
-import android.widget.ImageView;
-import android.widget.Switch;
-import android.widget.TextView;
-import android.widget.Toast;
-
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.annotation.GlideModule;
-
-import com.bumptech.glide.annotation.GlideExtension;
-import com.bumptech.glide.annotation.GlideOption;
-import com.bumptech.glide.annotation.GlideType;
-import com.bumptech.glide.annotation.compiler.GlideAnnotationProcessor;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 
 import java.util.ArrayList;
@@ -32,16 +22,20 @@ import java.util.List;
 import mx.com.naat.pokedex.R;
 import mx.com.naat.pokedex.favoritos.FavoritesPokemons;
 import mx.com.naat.pokedex.model.Pokemon;
-import mx.com.naat.pokedex.model.PokemonDao;
+import mx.com.naat.pokedex.pokemon.PokemonListAdapter;
 
-public class PokemonListAdapter extends RecyclerView.Adapter<PokemonListAdapter.ViewHolder> implements View.OnClickListener{
+public class FavoritesListAdapter extends RecyclerView.Adapter<FavoritesListAdapter.ViewHolder> {
 
-    private View.OnClickListener listener;
-
-    private final ArrayList<Pokemon> dataset;
+    private List<Pokemon> dataset;
     private final Context context;
+    FavoritesPokemons db;
 
-    public PokemonListAdapter(Context context) {
+    public FavoritesListAdapter(Context context) {
+        //Room
+        db = Room.databaseBuilder(context, FavoritesPokemons.class, "pokemon")
+                .allowMainThreadQueries()
+                .build();
+
         this.context = context;
         dataset = new ArrayList<>();
     }
@@ -62,40 +56,27 @@ public class PokemonListAdapter extends RecyclerView.Adapter<PokemonListAdapter.
         }
     }
 
+    @NonNull
     @Override
-    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_pokemon, parent, false);
-        view.setOnClickListener(this);//click method
         return new ViewHolder(view);
     }
 
-    @SuppressLint("NotifyDataSetChanged")
     @Override
-    public void onBindViewHolder( ViewHolder holder, int position) {
-        //Room
-        FavoritesPokemons db = Room.databaseBuilder(context, FavoritesPokemons.class, "pokemon")
-                .allowMainThreadQueries()
-                .build();
-
-
+    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Pokemon pokemon = dataset.get(position);
         holder.pokemonName.setText(pokemon.getName());
         holder.pokemonNumber.setText(pokemon.getNumber());
 
-        //Checkbox persistence
+        //Checkbox persistance
         holder.favorites.setOnCheckedChangeListener(null);
         holder.favorites.setChecked(pokemon.isFavorites());
-
-
-        List<Pokemon> pokemons = db.pokemonDao().getAll();
 
         holder.favorites.setOnCheckedChangeListener((buttonView, isChecked) -> {
             pokemon.setFavorites(isChecked);
 
-            if (isChecked) {
-                db.pokemonDao().insert(pokemon);
-
-            } else {
+            if (!isChecked) {
                 db.pokemonDao().delete(pokemon);
             }
 
@@ -109,10 +90,6 @@ public class PokemonListAdapter extends RecyclerView.Adapter<PokemonListAdapter.
                 .into(holder.pokemonImage);
     }
 
-    @Override
-    public long getItemId(int position) {
-        return position;
-    }
 
     @Override
     public int getItemCount() {
@@ -121,22 +98,8 @@ public class PokemonListAdapter extends RecyclerView.Adapter<PokemonListAdapter.
 
     @SuppressLint("NotifyDataSetChanged")
     public void addPokemonList(List<Pokemon> pokemonList) {
-        dataset.addAll(pokemonList);
-
+        dataset = db.pokemonDao().getAll();
         notifyDataSetChanged();
-    }
-
-    //Click methods
-
-    public void setOnClickListener(View.OnClickListener listener) {
-        this.listener = listener;
-    }
-
-    @Override
-    public void onClick(View v) {
-        if (listener != null) {
-            listener.onClick(v);
-        }
     }
 
 

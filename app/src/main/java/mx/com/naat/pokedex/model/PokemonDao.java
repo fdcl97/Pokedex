@@ -1,6 +1,7 @@
 package mx.com.naat.pokedex.model;
 
 import androidx.room.Dao;
+import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.Query;
 
@@ -19,7 +20,18 @@ interface PokemonDao {
     @Insert
     void insert(Pokemon pokemon);
 
-    @Query("SELECT name FROM pokemon_table WHERE NUMBER = :id")
+    @Query("SELECT name FROM pokemon_table WHERE number = :id")
     String getbyId(int id);
+
+    @Query("DELETE FROM pokemon_table WHERE number = :id")
+    public void deleteById(int id);
+
+    @Delete
+    void delete(Pokemon pokemon);
+
+    @Query("DELETE FROM pokemon_table")
+    public void deleteAll();
+
+
 
 }
