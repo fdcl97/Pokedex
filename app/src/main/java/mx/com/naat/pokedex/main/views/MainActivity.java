@@ -39,6 +39,7 @@ public class MainActivity extends AppCompatActivity implements MainView{
     private ImageButton crashButton;
     private MainPresenter presenter;
 
+    //Room
     FavoritesPokemons db;
 
 
@@ -47,20 +48,23 @@ public class MainActivity extends AppCompatActivity implements MainView{
 
         hideTopBar();
 
+
         //Room
         db = Room.databaseBuilder(getApplicationContext(), FavoritesPokemons.class, "pokemon")
                 .allowMainThreadQueries()
                 .build();
-
-
         //db.pokemonDao().deleteAll();
-
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
         crashButton = findViewById(R.id.crash_button);
         presenter = new MainPresenterImplement(this);
+
+
+        doAppCenter();
+        doCrashButton();
+        doHttpInterceptorAndChuck();
     }
 
     public void doAppCenter() {

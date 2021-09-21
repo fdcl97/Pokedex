@@ -90,7 +90,6 @@ public class FavoritesListAdapter extends RecyclerView.Adapter<FavoritesListAdap
                 .into(holder.pokemonImage);
     }
 
-
     @Override
     public int getItemCount() {
         return dataset.size();
