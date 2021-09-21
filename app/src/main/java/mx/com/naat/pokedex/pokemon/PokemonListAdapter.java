@@ -9,6 +9,8 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.Switch;
 import android.widget.TextView;
@@ -46,8 +48,7 @@ public class PokemonListAdapter extends RecyclerView.Adapter<PokemonListAdapter.
         private final ImageView pokemonImage;
         private final TextView pokemonName;
         private final TextView pokemonNumber;
-        @SuppressLint("UseSwitchCompatOrMaterialCode")
-        private final Switch favorites;
+        private final CheckBox favorites;
 
 
         public ViewHolder(View itemView) {
@@ -55,8 +56,7 @@ public class PokemonListAdapter extends RecyclerView.Adapter<PokemonListAdapter.
             pokemonImage = (ImageView) itemView.findViewById(R.id.pokemon_image);
             pokemonName = (TextView) itemView.findViewById(R.id.pokemon_name);
             pokemonNumber = (TextView) itemView.findViewById(R.id.pokemon_number);
-            favorites = (Switch) itemView.findViewById(R.id.favorites);
-            favorites.setChecked(true);
+            favorites = (CheckBox) itemView.findViewById(R.id.checkBox);
         }
     }
 
@@ -71,25 +71,32 @@ public class PokemonListAdapter extends RecyclerView.Adapter<PokemonListAdapter.
     @Override
     public void onBindViewHolder( ViewHolder holder, int position) {
 
-        FavoritesPokemons db = Room.databaseBuilder(context, FavoritesPokemons.class, "pokemon")
-                .allowMainThreadQueries()
-                .build();
-
         //boolean cheked = false;
         Pokemon pokemon = dataset.get(position);
         holder.pokemonName.setText(pokemon.getName());
         holder.pokemonNumber.setText(pokemon.getNumber());
+
+        //Checkbox
+        holder.favorites.setOnCheckedChangeListener(null);
+        holder.favorites.setChecked(pokemon.isFavorites());
+        holder.favorites.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+
+                pokemon.setFavorites(isChecked);
+            }
+        });
+
 
         /*if (holder.favorites.isChecked()) {
             cheked = true;
 
         }*/
         //holder.favorites.setChecked(pokemon.isFavorites(cheked));
-        //db.pokemonDao().insert(pokemon);
-
-
-
-
+        /*FavoritesPokemons db = Room.databaseBuilder(context, FavoritesPokemons.class, "pokemon")
+                .allowMainThreadQueries()
+                .build();
+        db.pokemonDao().insert(pokemon);*/
 
         //Get image with glide
         Glide.with(context)
@@ -99,6 +106,11 @@ public class PokemonListAdapter extends RecyclerView.Adapter<PokemonListAdapter.
                 .into(holder.pokemonImage);
         //notifyDataSetChanged();
 
+    }
+
+    @Override
+    public long getItemId(int position) {
+        return position;
     }
 
     @Override
