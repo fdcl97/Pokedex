@@ -2,6 +2,7 @@ package mx.com.naat.pokedex.pokemon;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.room.Room;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -66,16 +67,27 @@ public class PokemonListAdapter extends RecyclerView.Adapter<PokemonListAdapter.
         return new ViewHolder(view);
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     @Override
     public void onBindViewHolder( ViewHolder holder, int position) {
-        boolean cheked = false;
+
+        FavoritesPokemons db = Room.databaseBuilder(context, FavoritesPokemons.class, "pokemon")
+                .allowMainThreadQueries()
+                .build();
+
+        //boolean cheked = false;
         Pokemon pokemon = dataset.get(position);
         holder.pokemonName.setText(pokemon.getName());
         holder.pokemonNumber.setText(pokemon.getNumber());
-        if (holder.favorites.isChecked()) {
+
+        /*if (holder.favorites.isChecked()) {
             cheked = true;
-        }
-        holder.favorites.setChecked(pokemon.isFavorites(cheked));
+
+        }*/
+        //holder.favorites.setChecked(pokemon.isFavorites(cheked));
+        //db.pokemonDao().insert(pokemon);
+
+
 
 
 
@@ -86,6 +98,7 @@ public class PokemonListAdapter extends RecyclerView.Adapter<PokemonListAdapter.
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .into(holder.pokemonImage);
         //notifyDataSetChanged();
+
     }
 
     @Override
@@ -96,9 +109,7 @@ public class PokemonListAdapter extends RecyclerView.Adapter<PokemonListAdapter.
     @SuppressLint("NotifyDataSetChanged")
     public void addPokemonList(List<Pokemon> pokemonList) {
         dataset.addAll(pokemonList);
-        FavoritesPokemons db = FavoritesPokemons.getDatabase(this.context);
-        PokemonDao dao = db.pokemonDao();
-        //dao.insert(pokemonList.get(0));
+
         notifyDataSetChanged();
     }
 

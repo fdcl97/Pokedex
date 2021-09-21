@@ -13,8 +13,8 @@ interface PokemonDao {
     @Query("SELECT * FROM pokemon_table")
     public List<Pokemon> getAll();
 
-    @Query("SELECT * FROM pokemon_table WHERE favorites = 'TRUE'")
-    public List<Pokemon> getFavorites();
+    /*@Query("SELECT * FROM pokemon_table WHERE favorites = 'TRUE'")
+    public List<Pokemon> getFavorites();*/
 
     @Insert
     void insert(Pokemon pokemon);

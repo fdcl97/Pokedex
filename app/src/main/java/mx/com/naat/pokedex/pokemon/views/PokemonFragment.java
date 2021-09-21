@@ -1,5 +1,6 @@
 package mx.com.naat.pokedex.pokemon.views;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -78,12 +79,14 @@ public class PokemonFragment extends Fragment {
 
         pokemonResponseCall.enqueue(new Callback<PokemonResponse>() {
 
+            @SuppressLint("NotifyDataSetChanged")
             @Override
             public void onResponse(Call<PokemonResponse> call, Response<PokemonResponse> response) {
                 if (response.isSuccessful()){
 
                     PokemonResponse pokemonResponse = response.body();
                     ArrayList<Pokemon> pokemonList = pokemonResponse.getPokemons();
+
                     pokemonListAdapter.addPokemonList(pokemonList);
                     pokemonListAdapter.notifyDataSetChanged();
 

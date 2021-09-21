@@ -53,17 +53,21 @@ public class MainActivity extends AppCompatActivity implements MainView{
                 .allowMainThreadQueries()
                 .build();
 
-        Pokemon pokemon = new Pokemon();
-        pokemon.setName("ddddd");
-        pokemon.setUrl("sdsdsdsd");
-        pokemon.setNumber("20");
-        pokemon.setFavorites(true);
+
 
         //db.pokemonDao().insert(pokemon);
+        List<Pokemon> pokemons = db.pokemonDao().getAll();
+
+        //Print pokemons saved
+        for (int i = 0; i < pokemons.size(); i++) {
+            Log.e("POKEMON SAVED!!!!", pokemons.get(i).getName());
+        }
+
+        Toast.makeText(getApplicationContext(), pokemons.toString(), Toast.LENGTH_LONG).show();
+
         String pok = db.pokemonDao().getAll().toString();
 
-        Toast.makeText(getApplicationContext(), pok, Toast.LENGTH_SHORT).show();
-        Log.e("POKEMON SAVED!!!!", pok);
+
 
 
 
@@ -71,7 +75,7 @@ public class MainActivity extends AppCompatActivity implements MainView{
         setContentView(R.layout.activity_main);
 
         crashButton = findViewById(R.id.crash_button);
-        presenter = new MainPresenterImplement((MainView) this);
+        presenter = new MainPresenterImplement(this);
     }
 
     public void doAppCenter() {
